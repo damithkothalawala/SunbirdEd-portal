@@ -344,10 +344,14 @@ export class LoginSessionProvider {
     }
     
     private async getKongAccessToken(userTokens) {
+        logger.error('in the getKongAccessToken method and the userTokens is ', userTokens);
+        logger.error('in the getKongAccessToken method and the userTokens.refresh_token is ', userTokens.refresh_token);
         const standardLog = containerAPI.getStandardLoggerInstance();
+        logger.error('in the getKongAccessToken method and the standardLog is ', standardLog);
         const apiKey = await containerAPI.getDeviceSdkInstance().getToken().catch((err) => {
             standardLog.error({ id: 'LOGIN_SESSION_PROVIDER', message: 'Received error while fetching api key in getKongAccessToken', error: err });
         });
+        logger.error('in the getKongAccessToken method and the apiKey is ', apiKey);
         const reqBody = qs.stringify({
             refresh_token: userTokens.refresh_token
         });
