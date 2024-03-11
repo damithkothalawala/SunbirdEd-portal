@@ -147,9 +147,11 @@ export class LoginSessionProvider {
             await this.success()
         ).then(async (captured) => {
             this.showLoader();
-            logger.debug(`Resolve access token from buildStateSessionProvider`);
+            logger.error(`Resolve access token from buildStateSessionProvider`, captured);
             const userData = await this.resolveStateSession(captured);
+            logger.error(`Resolve access token from buildStateSessionProvider and userdata`,userData);
             const userTokens = await this.getKongAccessToken(userData);
+            logger.error(`IN  buildStateSessionProvider  method and userTokens`,userTokens);
             if(userTokens) {
                 await this.getUsers(userTokens);
             }
@@ -309,9 +311,11 @@ export class LoginSessionProvider {
     }
 
     private async resolveStateSession(captured: {[key: string]: string}) {
+        logger.error(`IN  resolveStateSession  method:`,captured);
         return await HTTPService.get(`${process.env.APP_BASE_URL}/v1/sso/create/session?id=${captured['id']}&clientId=desktop`, {})
             .toPromise()
             .then(async (response: any) => {
+                logger.error(`IN  resolveStateSession  method response:`, response);
                 if (response.data.access_token && response.data.refresh_token) {
                     return {
                         access_token: response.data.access_token,
