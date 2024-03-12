@@ -317,11 +317,15 @@ export class LoginSessionProvider {
             .then(async (response: any) => {
                 logger.error(`IN  resolveStateSession  method response:`, response);
                 if (response.data.access_token && response.data.refresh_token) {
+                    logger.error(`In the If statement and the value is  `, response.data.access_token);
+                    logger.error(`In the If statement and the value is  `, response.data.refresh_token);
                     return {
                         access_token: response.data.access_token,
                         refresh_token: response.data.refresh_token
                     };
                 }
+                logger.error(`out of the If statement and the value is  `, response.data.access_token);
+                logger.error(`out of the If statement and the value is  `, response.data.refresh_token);
             }).catch((err) => {
                 logger.error(`Error while resolveStateSession : ${err.message}`, err);
                 this.closeLoginWindow(false);
